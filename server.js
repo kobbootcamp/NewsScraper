@@ -26,20 +26,29 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
+//REMOVE START
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+//RE<OVE END
+
+// If deployed, use the deployed database. Otherwise use the local database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/kobnewsscraper";
+
+mongoose.connect(MONGODB_URI);
+
+
 
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("http://www.echojs.com/").then(function(response) {
+  axios.get("http://www.gatorsports.com/").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
+    $("article h3").each(function(i, element) {
       // Save an empty result object
       var result = {};
 
@@ -71,6 +80,13 @@ app.get("/scrape", function(req, res) {
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // TODO: Finish the route so it grabs all of the articles
+  db.Article.find({})
+  .then(function(dbArticle) {
+    res.json(dbArticle);
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
 });
 
 // Route for grabbing a specific Article by id, populate it with it's note
