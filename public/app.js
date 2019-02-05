@@ -17,6 +17,23 @@
 //   }
 // });
 
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+
+
+// $('#exampleModal').on('show.bs.modal', function (event) {
+//   var button = $(event.relatedTarget) // Button that triggered the modal
+//   var recipient = button.data('whatever') // Extract info from data-* attributes
+//   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+//   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+//   var modal = $(this)
+//   modal.find('.modal-title').text('New message to ' + recipient)
+//   modal.find('.modal-body input').val(recipient)
+// })
+
+
+
 $(".delete-article").on("click", function(event) {
   var thisId = $(this).attr("data-id");
 
@@ -46,13 +63,21 @@ $(".save-article").on("click", function(event) {
 })
 
 
+// $(".add-note").on("click", function() {
+//   $("#articleName").
+// })
+
 // Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+// $(document).on("click", "p", function() {
+  $(".add-note").on("click", function() {
   // Empty the notes from the note section
-  $("#notes").empty();
+  // $("#notes").empty();
+
+  $("#articleName").empty();
+
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
-
+// console.log(thisId)
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
@@ -62,26 +87,31 @@ $(document).on("click", "p", function() {
     .then(function(data) {
       console.log(data);
       // The title of the article
-      $("#notes").append("<h2>" + data.title + "</h2>");
+      // $("#notes").append("<h2>" + data.title + "</h2>");
+      $("#articleName").text(data.title);
+      $("#message-text").text(data.note);
       // An input to enter a new title
-      $("#notes").append("<input id='titleinput' name='title' >");
+      // $("#notes").append("<input id='titleinput' name='title' >");
       // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+      // $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+
       // A button to submit a new note, with the id of the article saved to it
       $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
       // If there's a note in the article
       if (data.note) {
         // Place the title of the note in the title input
-        $("#titleinput").val(data.note.title);
+        // $("#titleinput").val(data.note.title);
         // Place the body of the note in the body textarea
-        $("#bodyinput").val(data.note.body);
+        $("#message-text").val(data.note.body);
+
       }
     });
 });
 
 // When you click the savenote button
-$(document).on("click", "#savenote", function() {
+// $(document).on("click", "#savenote", function() {
+  $("#saveNoteButton").on("click", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -91,9 +121,9 @@ $(document).on("click", "#savenote", function() {
     url: "/articles/" + thisId,
     data: {
       // Value taken from title input
-      title: $("#titleinput").val(),
+      title: $("#articleName").val(),
       // Value taken from note textarea
-      body: $("#bodyinput").val()
+      body: $("#message-text").val()
     }
   })
     // With that done
@@ -101,10 +131,10 @@ $(document).on("click", "#savenote", function() {
       // Log the response
       console.log(data);
       // Empty the notes section
-      $("#notes").empty();
+      // $("#notes").empty();
     });
 
   // Also, remove the values entered in the input and textarea for note entry
-  $("#titleinput").val("");
-  $("#bodyinput").val("");
+  $("#articleName").val("");
+  $("#message-text").val("");
 });

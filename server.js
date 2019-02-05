@@ -25,7 +25,12 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/gatorscraper", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/gatorscraper", { useNewUrlParser: true });
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/gatorscraper";
+
+mongoose.connect(MONGODB_URI);
+
 
 
 //Set handlebars
@@ -40,7 +45,10 @@ app.set("view engine", "handlebars");
 // Routes
 
 app.get("/", function(req, res) {
-  db.Article.find({saved : false}, function (err, data) {
+  console.log("Hello");
+   db.Article.find({saved : false})
+  .populate("note")
+  .then(function (data) {
     var hbsObject = {
       article: data
     };
@@ -49,6 +57,35 @@ app.get("/", function(req, res) {
   }
   )
 })
+
+
+// app.get("/articles", function(req, res) {
+//   // Grab every document in the Articles collection
+//   db.Article.find({})
+//   .populate("note")
+//     .then(function(dbArticle) {
+//       // If we were able to successfully find Articles, send them back to the client
+//       res.json(dbArticle);
+//     })
+//     .catch(function(err) {
+//       // If an error occurred, send it to the client
+//       res.json(err);
+//     });
+// });
+
+
+// app.get("/", function(req, res) {
+//   db.Article.find({saved : false},function (err, data) {
+//     var hbsObject = {
+//       article: data
+//     };
+//     console.log(hbsObject)
+//     res.render("index", hbsObject);
+//   }
+//   ).populate("note")
+// })
+
+
 
 app.get("/saved", function(req, res) {
   db.Article.find({saved : true}, function (err, data) {
@@ -71,7 +108,7 @@ app.get("/scrape", function(req, res) {
     var $ = cheerio.load(response.data);
 
       //Clear the collection
-      db.Article.remove({});
+      db.Article.remove({saved:false});
 
     // Now, we grab every h3 within an article tag, and do the following:
     $(".item-details").each(function(i, element) {
@@ -115,6 +152,7 @@ app.get("/scrape", function(req, res) {
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
   db.Article.find({})
+  .populate("note")
     .then(function(dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
       res.json(dbArticle);
