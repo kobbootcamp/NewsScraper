@@ -1,0 +1,51 @@
+<div class="container">
+	<div class="card artcard">
+		<div class="row">
+			<div class="col-sm-8 titleLine">
+				<a href="{{link}}" target="_blank">{{title}}</a>
+						<div class="card card-body collapse" id={{_id}}>
+			Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh
+			helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+		</div>
+			</div>
+			<div class="col-sm-1">
+				<button type="button" id="saveButton" class="btn btn-primary save-article" data-id="{{this.id}}">Save</button>
+			</div>
+			<div class="col-sm-1">
+				<button type="button" id="noteButton" class="btn add-note" data-toggle="collapse" data-target="#"{{_id}}
+				 aria-expanded="false" data-id="{{_id}}">Note</button>
+				{{!-- <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+				 aria-expanded="false" aria-controls="collapseExample">
+					Note
+				</button> --}}
+			</div>
+			<div class="col-sm-1">
+				<button type="button" id="deleteButton" class="btn delete-article" data-id="{{_id}}">Delete</button>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-8 excerpt">
+				{{excerpt}}
+			</div>
+
+		</div>
+	</div>
+</div>
+{{!-- <div class="row">
+	<div --}}
+	 {{!-- <p>
+		<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+		 aria-controls="collapseExample">
+			Link with href
+		</a>
+
+	</p> --}}
+	 {{!-- <div class="collapse" id="collapseExample">
+		<div class="card card-body">
+			Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh
+			helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+		</div>
+	</div> --}}
+	 {{!-- <button type="button" class="btn btn-primary">Save</button>
+	<button class="delete-cat" data-id="{{this.id}}">DELETE!</button> --}}

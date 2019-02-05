@@ -1,0 +1,50 @@
+.btn {
+    margin-top: 50%;
+  
+}
+
+
+#deleteButton {
+    background-color: white;
+    border-color: #fa4616;
+    color: #fa4616;
+    border-width: 1px;
+}
+
+#saveButton {
+   
+    background-color:  #06229f;
+}
+
+#noteButton {
+    color:#06229f;
+    background-color:  #f8f9fa;
+    border-color: #06229f;
+}
+
+.excerpt {
+    font-style: italic;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-bottom: 3%;
+
+}
+
+.titleLine {
+    padding-top: 10px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+#largetitle {
+    margin-top: 3%;
+    text-align: center;
+    border-color:#fa4616;
+    border-style:solid;
+    border-width: 2px;
+}
+
+#articlesHeader {
+    background-color: #06229f;
+    color: white;
+}

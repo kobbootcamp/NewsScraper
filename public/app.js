@@ -1,11 +1,49 @@
 // Grab the articles as a json
-$.getJSON("/articles", function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-  }
-});
+// $.getJSON("/articles", function(data) {
+//   // For each one
+//   for (var i = 0; i < data.length; i++) {
+//     // Display the apropos information on the page
+//     $("#articles").append("<div class='card'><p class='title' data-id='" + data[i]._id + "'>" + data[i].title + "<br /> <a class='article-link' target='_blank' rel='noopener noreferrer' href='" + data[i].link + "'>" + data[i].link + "</a></p></div>");
+//   }
+// });
+
+
+
+// $.getJSON("/saved", function(data) {
+//   // For each one
+//   for (var i = 0; i < data.length; i++) {
+//     // Display the apropos information on the page
+//     $("#articles").append("<div class='card'><p data-id='" + data[i]._id + "'>" + data[i].title + "<br /> <a class='article-link' target='_blank' rel='noopener noreferrer' href='" + data[i].link + "'>" + data[i].link + "</a></p></div>");
+//   }
+// });
+
+$(".delete-article").on("click", function(event) {
+  var thisId = $(this).attr("data-id");
+
+  $.ajax({
+    url: "/deleteArticle/" + thisId,
+    type: "DELETE"
+  }).then(
+    function() {
+      location.reload();
+    }
+  )
+})
+
+
+
+$(".save-article").on("click", function(event) {
+  var thisId = $(this).attr("data-id");
+
+  $.ajax({
+    url: "/saveArticle/" + thisId,
+    type: "POST"
+  }).then(
+    function() {
+      location.reload();
+    }
+  )
+})
 
 
 // Whenever someone clicks a p tag
