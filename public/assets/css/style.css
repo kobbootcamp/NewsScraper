@@ -1,8 +1,13 @@
 .btn {
-    margin-top: 50%;
+    margin-top: 20%;
   
 }
 
+.jumbotron {
+    background-image: url("/assets/images/centuryTower.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
 #deleteButton {
     background-color: white;
@@ -11,14 +16,16 @@
     border-width: 1px;
 }
 
-#saveButton {
+#saveButton, #saveNoteButton {
    
     background-color:  #06229f;
+    color: white;
+    text-align: center;
 }
 
-#noteButton {
+#commentButton {
     color:#06229f;
-    background-color:  #f8f9fa;
+    background-color:  #e9ecef;
     border-color: #06229f;
 }
 
