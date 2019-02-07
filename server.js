@@ -44,11 +44,23 @@ app.set("view engine", "handlebars");
 
 // Routes
 
+// app.get("/", function(req, res) {
+//    db.Article.find({saved : false})
+//   .populate("note")
+//   .then(function (data) {
+//     var hbsObject = {
+//       article: data
+//     };
+//     console.log(hbsObject)
+//     res.render("index", hbsObject);
+//   }
+//   )
+// })
+
+
+
 app.get("/", function(req, res) {
-  console.log("Hello");
-   db.Article.find({saved : false})
-  .populate("note")
-  .then(function (data) {
+  db.Article.find({saved : false}, function (err, data) {
     var hbsObject = {
       article: data
     };
@@ -148,7 +160,27 @@ app.get("/clear", function(req, res) {
 
 
 
-// Route for grabbing a specific Article by id, populate it with it's note
+// // Route for grabbing a specific Article by id, populate it with it's note
+// app.get("/articles/:id", function(req, res) {
+//   console.log("req: " + req.params.id)
+//   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//   db.Article.findById({_id: req.params.id}, function(dbArticle) {
+// console.log ("Gets here")
+//     res.json(dbArticle)
+//   })
+//     // ..and populate all of the notes associated with it
+//     // .populate("note")
+//     // .then(function(dbArticle) {
+//       // If we were able to successfully find an Article with the given id, send it back to the client
+//       // res.json(dbArticle);
+//     // })
+//     .catch(function(err) {
+//       // If an error occurred, send it to the client
+//       res.json(err);
+//     });
+// });
+
+
 app.get("/articles/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
   db.Article.findOne({ _id: req.params.id })
@@ -163,6 +195,8 @@ app.get("/articles/:id", function(req, res) {
       res.json(err);
     });
 });
+
+
 
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function(req, res) {

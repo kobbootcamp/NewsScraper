@@ -33,13 +33,14 @@ $(".save-article").on("click", function (event) {
 })
 
 
-$("#commentButton").on("click", function () {
-
+$(".add-note").on("click", function (event) {
+  console.log('why no work!?!?');
   // Empty the notes from the note section
    $("#articleName").empty();
 
   var thisId = $(this).attr("data-id");
-
+  
+console.log("ThisID: " + thisId)
   // Now make an ajax call for the Article
   $.ajax({
       method: "GET",
@@ -47,13 +48,14 @@ $("#commentButton").on("click", function () {
     })
     // With that done, add the note information to the page
     .then(function (data) {
-      console.log(data);
+      console.log("data.note.body: " + data.note.body);
       // The title of the article
       $("#articleName").text(data.title);
-      $("#message-text").text(data.note);
+      $("#message-text").text(data.note.body);
 
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      // $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      $("#saveNoteButton").data(data._id);
 
       // If there's a note in the article
       if (data.note) {
@@ -64,10 +66,10 @@ $("#commentButton").on("click", function () {
 });
 
 // When you click the savenote button
-$("#saveNoteButton").on("click", function () {
+$("#saveNoteButton").on("click", function (event) {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
-
+// var noteBody = $("textarea#message-text").val()
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
       method: "POST",
@@ -82,12 +84,12 @@ $("#saveNoteButton").on("click", function () {
     // With that done
     .then(function (data) {
       // Log the response
-      console.log(data);
+      console.log("note id: " + data.body)
       // Empty the notes section
       // $("#notes").empty();
     });
 
   // Also, remove the values entered in the input and textarea for note entry
-  $("#articleName").val("");
-  $("#message-text").val("");
+  // $("#articleName").val("");
+  // $("#message-text").val("");
 });

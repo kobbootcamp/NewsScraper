@@ -28,7 +28,8 @@
 
 		<div class="row">
 			<div class="col-md-12 comment">
-				{{this.note}}
+				{{note}}
+				{{!-- {{_id}} --}}
 			</div>
 			{{!-- <div class="col-md-4"></div> --}}
 		</div>
@@ -56,7 +57,7 @@
 			</div>
 			<div class="modal-footer">
 				{{!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-				<button type="button" id="saveNoteButton" data-dismiss="modal" data-id="{{_id}}" class="btn btn-primary">Save changes</button>
+				<button type="button" id="saveNoteButton" data-dismiss="modal"  data-id="{{notes}}" class="btn btn-primary">Save changes</button>
 			</div>
 		</div>
 	</div>
