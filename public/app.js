@@ -35,7 +35,6 @@ $(".save-article").on("click", function (event) {
 
 $("#commentButton").on("click", function () {
 
-
   // Empty the notes from the note section
    $("#articleName").empty();
 
